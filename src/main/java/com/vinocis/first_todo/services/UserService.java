@@ -3,11 +3,9 @@ package com.vinocis.first_todo.services;
 import com.vinocis.first_todo.models.User;
 import com.vinocis.first_todo.repositories.TaskRepository;
 import com.vinocis.first_todo.repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.RuntimeErrorException;
 import java.util.Optional;
 
 @Service
@@ -23,11 +21,9 @@ public class UserService {
         return user.orElseThrow(() -> new RuntimeException("User not found. Id: " + id));
     }
 
-    @Transactional
     public User create(User user) {
         user.setId(null);
         user = this.userRepository.save(user);
-        this.taskRepository.saveAll(user.getTasks());
         return user;
     }
 
